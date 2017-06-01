@@ -17,7 +17,7 @@
 package org.jboss.aerogear.unifiedpush.message;
 
 import org.jboss.aerogear.unifiedpush.api.PushApplication;
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.Variant;
 import org.jboss.aerogear.unifiedpush.api.VariantType;
 import org.jboss.aerogear.unifiedpush.message.token.TokenLoader;
@@ -104,7 +104,7 @@ public class NotificationRouter {
             jsonMessageContent = message.toMinimizedJsonString();
         }
 
-        final PushMessageInformation pushMessageInformation =
+        final FlatPushMessageInformation pushMessageInformation =
                 metricsService.storeNewRequestFrom(
                         pushApplication.getPushApplicationID(),
                         jsonMessageContent,

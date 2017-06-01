@@ -25,7 +25,7 @@ import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.Variant;
 import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.message.holder.MessageHolderWithTokens;
@@ -80,9 +80,9 @@ public class NotificationDispatcher {
     private class SenderServiceCallback implements NotificationSenderCallback {
         private final Variant variant;
         private final int tokenSize;
-        private final PushMessageInformation pushMessageInformation;
+        private final FlatPushMessageInformation pushMessageInformation;
 
-        public SenderServiceCallback(Variant variant, int tokenSize, PushMessageInformation pushMessageInformation) {
+        public SenderServiceCallback(Variant variant, int tokenSize, FlatPushMessageInformation pushMessageInformation) {
             this.variant = variant;
             this.tokenSize = tokenSize;
             this.pushMessageInformation = pushMessageInformation;
@@ -100,7 +100,7 @@ public class NotificationDispatcher {
         }
     }
 
-    private void updateStatusOfPushMessageInformation(final PushMessageInformation pushMessageInformation, final String variantID, final Boolean deliveryStatus, final String reason) {
+    private void updateStatusOfPushMessageInformation(final FlatPushMessageInformation pushMessageInformation, final String variantID, final Boolean deliveryStatus, final String reason) {
         final VariantMetricInformation variantMetricInformation = new VariantMetricInformation();
         variantMetricInformation.setVariantID(variantID);
         variantMetricInformation.setDeliveryStatus(deliveryStatus);

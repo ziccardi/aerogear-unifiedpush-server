@@ -213,6 +213,6 @@ public class PushMessageInformation extends BaseModel {
 
     public void addVariantInformations(VariantMetricInformation variantMetricInformation) {
         this.variantInformations.add(variantMetricInformation);
-        variantMetricInformation.setPushMessageInformation(this);
+        // variantMetricInformation.setPushMessageInformation(this); commented by zic
     }
 }

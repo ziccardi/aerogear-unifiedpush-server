@@ -17,7 +17,7 @@
 package org.jboss.aerogear.unifiedpush.message.jms;
 
 import org.jboss.aerogear.unifiedpush.api.AndroidVariant;
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.Variant;
 import org.jboss.aerogear.unifiedpush.api.VariantType;
 import org.jboss.aerogear.unifiedpush.message.AbstractJMSTest;
@@ -115,7 +115,7 @@ public class TestTokenLoaderTransactionFailForGCM extends AbstractJMSTest {
         }
 
         // given
-        PushMessageInformation pmi = new PushMessageInformation();
+        FlatPushMessageInformation pmi = new FlatPushMessageInformation();
         pmi.setId(messageId);
         UnifiedPushMessage pushMessage = new UnifiedPushMessage();
         Variant variant = new AndroidVariant();

@@ -16,7 +16,7 @@
  */
 package org.jboss.aerogear.unifiedpush.message;
 
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.message.jms.Dequeue;
 import org.jboss.aerogear.unifiedpush.service.metrics.PushMessageMetricsService;
@@ -38,13 +38,13 @@ public class VariantMetricInformationObserver {
     public void processVariantMetricInformation(@Observes @Dequeue VariantMetricInformation vmi) {
 
         final String pushMessageInformationId = vmi.getPushMessageInformation().getId();
-        final PushMessageInformation pushMessageInformation = metricsService.getPushMessageInformation(pushMessageInformationId);
+        final FlatPushMessageInformation pushMessageInformation = metricsService.getPushMessageInformation(pushMessageInformationId);
         metricsService.lock(pushMessageInformation);
 
         logger.error("transforming some VMIs....");
 
         // transformer:
-        pushMessageInformation.setTotalReceivers(pushMessageInformation.getTotalReceivers() + vmi.getReceivers());
+        //pushMessageInformation.setTotalReceivers(pushMessageInformation.getTotalReceivers() + vmi.getReceivers());
         boolean updatedExisting = false;
         for (VariantMetricInformation existingMetric : pushMessageInformation.getVariantInformations()) {
             if (vmi.getVariantID().equals(existingMetric.getVariantID())) {

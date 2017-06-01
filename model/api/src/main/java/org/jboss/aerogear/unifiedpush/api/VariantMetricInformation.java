@@ -38,7 +38,7 @@ public class VariantMetricInformation extends BaseModel {
     private Integer totalBatches = 0;
 
     @JsonIgnore
-    private PushMessageInformation pushMessageInformation;
+    private FlatPushMessageInformation pushMessageInformation;
 
     public VariantMetricInformation() {
     }
@@ -95,11 +95,11 @@ public class VariantMetricInformation extends BaseModel {
         this.reason = reason;
     }
 
-    public PushMessageInformation getPushMessageInformation() {
+    public FlatPushMessageInformation getPushMessageInformation() {
         return pushMessageInformation;
     }
 
-    public void setPushMessageInformation(PushMessageInformation pushMessageInformation) {
+    public void setPushMessageInformation(FlatPushMessageInformation pushMessageInformation) {
         this.pushMessageInformation = pushMessageInformation;
     }
 

@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 import org.jboss.aerogear.unifiedpush.api.AndroidVariant;
 import org.jboss.aerogear.unifiedpush.api.PushApplication;
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.SimplePushVariant;
 import org.jboss.aerogear.unifiedpush.api.iOSVariant;
 import org.jboss.aerogear.unifiedpush.dao.PushMessageInformationDao;
@@ -102,7 +102,7 @@ public class TestNotificationRouter {
     @Test
     public void testInvokesMetricsService(PushMessageInformationDao pushMessageInformationDao) {
         router.submit(app, message);
-        verify(pushMessageInformationDao).create(Mockito.any(PushMessageInformation.class));
+        verify(pushMessageInformationDao).create(Mockito.any(FlatPushMessageInformation.class));
     }
 
     @Test

@@ -24,7 +24,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.dao.PageResult;
 import org.jboss.aerogear.unifiedpush.dao.PushMessageInformationDao;
 import org.jboss.aerogear.unifiedpush.dto.MessageMetrics;
@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class JPAPushMessageInformationDao extends JPABaseDao<PushMessageInformation, String> implements PushMessageInformationDao {
+public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInformation, String> implements PushMessageInformationDao {
 
     private static final String ASC = "ASC";
     private static final String DESC = "DESC";
@@ -41,19 +41,19 @@ public class JPAPushMessageInformationDao extends JPABaseDao<PushMessageInformat
 
 
     @Override
-    public List<PushMessageInformation> findAllForPushApplication(String pushApplicationId, boolean ascending) {
+    public List<FlatPushMessageInformation> findAllForPushApplication(String pushApplicationId, boolean ascending) {
         return findAllForPushApplicationByParams(pushApplicationId, null, ascending, null, null);
     }
 
     @Override
-    public List<PushMessageInformation> findAllForPushApplicationByParams(String pushApplicationId, String search, boolean ascending, Integer page, Integer pageSize) {
+    public List<FlatPushMessageInformation> findAllForPushApplicationByParams(String pushApplicationId, String search, boolean ascending, Integer page, Integer pageSize) {
         String baseQuery = "from PushMessageInformation pmi where pmi.pushApplicationId = :pushApplicationId";
         if (search != null) {
             baseQuery += " AND pmi.rawJsonMessage LIKE :search";
         }
         final String queryJPQL = "select pmi " + baseQuery + " ORDER BY pmi.submitDate " + ascendingOrDescending(ascending);
 
-        TypedQuery<PushMessageInformation> typedQuery = createQuery(queryJPQL)
+        TypedQuery<FlatPushMessageInformation> typedQuery = createQuery(queryJPQL)
                 .setParameter("pushApplicationId", pushApplicationId);
         if (search != null) {
             typedQuery.setParameter("search", "%" + search + "%");
@@ -92,17 +92,17 @@ public class JPAPushMessageInformationDao extends JPABaseDao<PushMessageInformat
     }
 
     @Override
-    public PageResult<PushMessageInformation, MessageMetrics> findAllForPushApplication(String pushApplicationId, String search, boolean ascending, Integer page, Integer pageSize) {
+    public PageResult<FlatPushMessageInformation, MessageMetrics> findAllForPushApplication(String pushApplicationId, String search, boolean ascending, Integer page, Integer pageSize) {
 
-        final List<PushMessageInformation> pushMessageInformationList = findAllForPushApplicationByParams(pushApplicationId, search, ascending, page, pageSize);
+        final List<FlatPushMessageInformation> pushMessageInformationList = findAllForPushApplicationByParams(pushApplicationId, search, ascending, page, pageSize);
         final MessageMetrics messageMetrics = findMessageMetricsForPushApplicationByParams(pushApplicationId, search, ascending, page, pageSize);
 
-        return new PageResult<PushMessageInformation, MessageMetrics>(pushMessageInformationList,  messageMetrics);
+        return new PageResult<FlatPushMessageInformation, MessageMetrics>(pushMessageInformationList,  messageMetrics);
     }
 
     @Override
-    public PushMessageInformation lockedSelect(PushMessageInformation pushMessageInformation) {
-        PushMessageInformation pmi = find(pushMessageInformation.getId(), LockModeType.PESSIMISTIC_WRITE);
+    public FlatPushMessageInformation lockedSelect(FlatPushMessageInformation pushMessageInformation) {
+        FlatPushMessageInformation pmi = find(pushMessageInformation.getId(), LockModeType.PESSIMISTIC_WRITE);
         return pmi;
     }
 
@@ -123,7 +123,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<PushMessageInformat
     }
 
     @Override
-    public List<PushMessageInformation> findLatestActivity(String loginName, int maxResults) {
+    public List<FlatPushMessageInformation> findLatestActivity(String loginName, int maxResults) {
         return createQuery("select pmi from PushMessageInformation pmi, PushApplication pa" +
                 " WHERE pmi.pushApplicationId = pa.pushApplicationID AND pa.developer = :developer)" +
                 " ORDER BY pmi.submitDate " + DESC)
@@ -155,7 +155,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<PushMessageInformat
     }
 
     @Override
-    public List<PushMessageInformation> findLatestActivity(int maxResults) {
+    public List<FlatPushMessageInformation> findLatestActivity(int maxResults) {
         return createQuery("select pmi from PushMessageInformation pmi" +
                 " ORDER BY pmi.submitDate " + DESC)
                 .setMaxResults(maxResults)
@@ -179,7 +179,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<PushMessageInformat
     }
 
     @Override
-    public Class<PushMessageInformation> getType() {
-        return PushMessageInformation.class;
+    public Class<FlatPushMessageInformation> getType() {
+        return FlatPushMessageInformation.class;
     }
 }

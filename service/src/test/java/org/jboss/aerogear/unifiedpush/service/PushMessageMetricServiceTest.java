@@ -18,7 +18,7 @@
 package org.jboss.aerogear.unifiedpush.service;
 
 
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.dao.VariantMetricInformationDao;
 import org.jboss.aerogear.unifiedpush.service.metrics.PushMessageMetricsService;
@@ -34,7 +34,7 @@ public class PushMessageMetricServiceTest extends AbstractBaseServiceTest{
     @Inject
     private VariantMetricInformationDao variantMetricInformationDao;
 
-    private PushMessageInformation pushMessageInformation;
+    private FlatPushMessageInformation pushMessageInformation;
 
     @Override
     protected void specificSetup() {
@@ -56,13 +56,13 @@ public class PushMessageMetricServiceTest extends AbstractBaseServiceTest{
     @Test
     public void updateAnalyticsTest() {
         pushMessageMetricsService.updateAnalytics(pushMessageInformation.getId(),"321");
-        PushMessageInformation updatedPushInformation = pushMessageMetricsService.getPushMessageInformation(pushMessageInformation.getId());
+        FlatPushMessageInformation updatedPushInformation = pushMessageMetricsService.getPushMessageInformation(pushMessageInformation.getId());
         assertThat(updatedPushInformation.getAppOpenCounter()).isEqualTo(1);
         VariantMetricInformation updatedVariantMetric = variantMetricInformationDao.findVariantMetricInformationByVariantID("321", updatedPushInformation.getId());
         assertThat(updatedVariantMetric.getVariantOpenCounter()).isEqualTo(1);
 
         pushMessageMetricsService.updateAnalytics(pushMessageInformation.getId(),"321");
-        PushMessageInformation updatedPushInformation1 = pushMessageMetricsService.getPushMessageInformation(pushMessageInformation.getId());
+        FlatPushMessageInformation updatedPushInformation1 = pushMessageMetricsService.getPushMessageInformation(pushMessageInformation.getId());
         assertThat(updatedPushInformation1.getAppOpenCounter()).isEqualTo(2);
         VariantMetricInformation updatedVariantMetric1 = variantMetricInformationDao.findVariantMetricInformationByVariantID("321", updatedPushInformation.getId());
         assertThat(updatedVariantMetric1.getVariantOpenCounter()).isEqualTo(2);

@@ -21,7 +21,7 @@ import java.util.Date;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.jboss.aerogear.unifiedpush.api.PushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.dao.PageResult;
 import org.jboss.aerogear.unifiedpush.dao.PushMessageInformationDao;
@@ -56,15 +56,15 @@ public class PushMessageMetricsService {
      *
      * @return the metadata object for the started push message request job
      */
-    public PushMessageInformation storeNewRequestFrom(String pushAppId, String json, String ipAddress, String clientIdentifier, int totalVariantCount) {
-        final PushMessageInformation information = new PushMessageInformation();
+    public FlatPushMessageInformation storeNewRequestFrom(String pushAppId, String json, String ipAddress, String clientIdentifier, int totalVariantCount) {
+        final FlatPushMessageInformation information = new FlatPushMessageInformation();
 
         information.setRawJsonMessage(json);
         information.setIpAddress(ipAddress);
         information.setPushApplicationId(pushAppId);
         information.setClientIdentifier(clientIdentifier);
-        information.setServedVariants(0);
-        information.setTotalVariants(totalVariantCount);
+//        information.setServedVariants(0); // commented by zic
+//        information.setTotalVariants(totalVariantCount); // commented by zic
 
         pushMessageInformationDao.create(information);
         pushMessageInformationDao.flushAndClear();
@@ -72,7 +72,7 @@ public class PushMessageMetricsService {
         return information;
     }
 
-    public void updatePushMessageInformation(PushMessageInformation pushMessageInformation) {
+    public void updatePushMessageInformation(FlatPushMessageInformation pushMessageInformation) {
         pushMessageInformationDao.update(pushMessageInformation);
     }
 
@@ -80,7 +80,7 @@ public class PushMessageMetricsService {
      * Locks the push message information for updates so that there will be no updates concurrently
      * @param pushMessageInformation push message information to lock
      */
-    public PushMessageInformation lock(PushMessageInformation pushMessageInformation) {
+    public FlatPushMessageInformation lock(FlatPushMessageInformation pushMessageInformation) {
         return pushMessageInformationDao.lockedSelect(pushMessageInformation);
     }
 
@@ -94,7 +94,7 @@ public class PushMessageMetricsService {
      *
      * @return list of push message info objects
      */
-    public PageResult<PushMessageInformation, MessageMetrics> findAllForPushApplication(String pushApplicationID, String search, boolean sorting, Integer page, Integer pageSize) {
+    public PageResult<FlatPushMessageInformation, MessageMetrics> findAllForPushApplication(String pushApplicationID, String search, boolean sorting, Integer page, Integer pageSize) {
         return pushMessageInformationDao.findAllForPushApplication(pushApplicationID, search, sorting, page, pageSize);
     }
 
@@ -129,12 +129,12 @@ public class PushMessageMetricsService {
         pushMessageInformationDao.deletePushInformationOlderThan(historyDate);
     }
 
-    public PushMessageInformation getPushMessageInformation(String id) {
+    public FlatPushMessageInformation getPushMessageInformation(String id) {
         return pushMessageInformationDao.find(id);
     }
 
     public void updateAnalytics(String aerogearPushId, String variantID) {
-        PushMessageInformation pushMessageInformation = this.getPushMessageInformation(aerogearPushId);
+        FlatPushMessageInformation pushMessageInformation = this.getPushMessageInformation(aerogearPushId);
 
         if (pushMessageInformation != null) { //if we are here, app has been opened due to a push message
 
