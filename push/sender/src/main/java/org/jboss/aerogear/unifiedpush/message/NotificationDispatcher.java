@@ -19,7 +19,6 @@ package org.jboss.aerogear.unifiedpush.message;
 import java.util.Collection;
 
 import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
@@ -27,14 +26,13 @@ import javax.inject.Inject;
 
 import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
 import org.jboss.aerogear.unifiedpush.api.Variant;
-import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.message.holder.MessageHolderWithTokens;
 import org.jboss.aerogear.unifiedpush.message.jms.Dequeue;
-import org.jboss.aerogear.unifiedpush.message.jms.DispatchToQueue;
 import org.jboss.aerogear.unifiedpush.message.sender.NotificationSenderCallback;
 import org.jboss.aerogear.unifiedpush.message.sender.PushNotificationSender;
 import org.jboss.aerogear.unifiedpush.message.sender.SenderTypeLiteral;
 import org.jboss.aerogear.unifiedpush.message.token.TokenLoader;
+import org.jboss.aerogear.unifiedpush.service.metrics.PushMessageMetricsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,12 +45,11 @@ public class NotificationDispatcher {
     private final Logger logger = LoggerFactory.getLogger(NotificationDispatcher.class);
 
     @Inject
-    @Any
-    private Instance<PushNotificationSender> senders;
+    private PushMessageMetricsService metricsService;
 
     @Inject
-    @DispatchToQueue
-    private Event<VariantMetricInformation> dispatchVariantMetricEvent;
+    @Any
+    private Instance<PushNotificationSender> senders;
 
     /**
      * Receives a {@link UnifiedPushMessage} and list of device tokens that the message should be sent to, selects appropriate sender implementation that
@@ -96,17 +93,12 @@ public class NotificationDispatcher {
         @Override
         public void onError(final String reason) {
             logger.warn(String.format("Error on '%s' delivery: %s", variant.getType().getTypeName(), reason));
-            updateStatusOfPushMessageInformation(pushMessageInformation, variant.getVariantID(), Boolean.FALSE, reason);
+
+
+
+//            metricsService.appendError(...........);
+
+            //updateStatusOfPushMessageInformation(pushMessageInformation, variant.getVariantID(), Boolean.FALSE, reason);
         }
-    }
-
-    private void updateStatusOfPushMessageInformation(final FlatPushMessageInformation pushMessageInformation, final String variantID, final Boolean deliveryStatus, final String reason) {
-        final VariantMetricInformation variantMetricInformation = new VariantMetricInformation();
-        variantMetricInformation.setVariantID(variantID);
-        variantMetricInformation.setDeliveryStatus(deliveryStatus);
-        variantMetricInformation.setReason(reason);
-        variantMetricInformation.setPushMessageInformation(pushMessageInformation);
-
-        dispatchVariantMetricEvent.fire(variantMetricInformation);
     }
 }
