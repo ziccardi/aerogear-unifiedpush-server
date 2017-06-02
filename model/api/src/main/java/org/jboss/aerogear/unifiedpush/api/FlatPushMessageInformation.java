@@ -95,4 +95,8 @@ public class FlatPushMessageInformation extends BaseModel {
     // TODO: this should return a copy or an immutable object to avoid threading issues
     return variantInformations;
   }
+
+  public String getIpAddress() {
+    return ipAddress;
+  }
 }

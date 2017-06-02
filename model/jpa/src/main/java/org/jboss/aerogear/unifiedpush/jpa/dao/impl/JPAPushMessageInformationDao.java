@@ -47,7 +47,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
 
     @Override
     public List<FlatPushMessageInformation> findAllForPushApplicationByParams(String pushApplicationId, String search, boolean ascending, Integer page, Integer pageSize) {
-        String baseQuery = "from PushMessageInformation pmi where pmi.pushApplicationId = :pushApplicationId";
+        String baseQuery = "from FlatPushMessageInformation pmi where pmi.pushApplicationId = :pushApplicationId";
         if (search != null) {
             baseQuery += " AND pmi.rawJsonMessage LIKE :search";
         }
@@ -67,7 +67,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
 
     @Override
     public long getNumberOfPushMessagesForPushApplication(String pushApplicationId) {
-        return createQuery("select count(*) from PushMessageInformation pmi where pmi.pushApplicationId = :pushApplicationId", Long.class)
+        return createQuery("select count(*) from FlatPushMessageInformation pmi where pmi.pushApplicationId = :pushApplicationId", Long.class)
                 .setParameter("pushApplicationId", pushApplicationId).getSingleResult();
     }
 
@@ -108,7 +108,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
 
     @Override
     public long getNumberOfPushMessagesForLoginName(String loginName) {
-        return createQuery("select count(pmi) from PushMessageInformation pmi, PushApplication pa " +
+        return createQuery("select count(pmi) from FlatPushMessageInformation pmi, PushApplication pa " +
                 "where pmi.pushApplicationId = pa.pushApplicationID and pa.developer = :developer)", Long.class)
                 .setParameter("developer", loginName).getSingleResult();
     }
@@ -124,7 +124,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
 
     @Override
     public List<FlatPushMessageInformation> findLatestActivity(String loginName, int maxResults) {
-        return createQuery("select pmi from PushMessageInformation pmi, PushApplication pa" +
+        return createQuery("select pmi from FlatPushMessageInformation pmi, PushApplication pa" +
                 " WHERE pmi.pushApplicationId = pa.pushApplicationID AND pa.developer = :developer)" +
                 " ORDER BY pmi.submitDate " + DESC)
                 .setParameter("developer", loginName)
@@ -143,7 +143,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
                 .setParameter("oldest", oldest)
                 .executeUpdate();
 
-        logger.info("Deleting ['" + affectedRows + "'] outdated PushMessageInformation objects");
+        logger.info("Deleting ['" + affectedRows + "'] outdated FlatPushMessageInformation objects");
     }
 
     //Admin queries
@@ -156,7 +156,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
 
     @Override
     public List<FlatPushMessageInformation> findLatestActivity(int maxResults) {
-        return createQuery("select pmi from PushMessageInformation pmi" +
+        return createQuery("select pmi from FlatPushMessageInformation pmi" +
                 " ORDER BY pmi.submitDate " + DESC)
                 .setMaxResults(maxResults)
                 .getResultList();
@@ -164,7 +164,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
 
     @Override
     public long getNumberOfPushMessagesForApplications() {
-        return createQuery("select count(pmi) from PushMessageInformation pmi", Long.class).getSingleResult();
+        return createQuery("select count(pmi) from FlatPushMessageInformation pmi", Long.class).getSingleResult();
     }
 
     /**
