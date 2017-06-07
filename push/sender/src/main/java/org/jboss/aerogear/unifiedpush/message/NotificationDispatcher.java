@@ -95,6 +95,8 @@ public class NotificationDispatcher {
             logger.warn(String.format("Error on '%s' delivery: %s", variant.getType().getTypeName(), reason));
 
 
+            metricsService.appendError(pushMessageInformation, variant, reason);
+
 
 //            metricsService.appendError(...........);
 

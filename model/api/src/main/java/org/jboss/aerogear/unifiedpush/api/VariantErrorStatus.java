@@ -1,21 +1,23 @@
 package org.jboss.aerogear.unifiedpush.api;
 
-public class VariantErrorStatus {
+public class VariantErrorStatus extends BaseModel {
 
   //@Id
   private String pushMessageVariantId; // = "push-job-id" + ":" + "variant-id";
   private String errorReason; // the text we receive for the error
 
-  private String pushObjectId;
+  private String pushJobId;
   private String variantId;
+
+  private FlatPushMessageInformation pushMessageInformation;
 
   public VariantErrorStatus() {
   }
 
-  public VariantErrorStatus(final String pushObjectId, final String variantId, final String errorReason) {
-    this.pushMessageVariantId = new StringBuilder(pushObjectId).append(':').append(variantId).toString();
+  public VariantErrorStatus(final String pushJobId, final String variantId, final String errorReason) {
+    this.pushMessageVariantId = new StringBuilder(pushJobId).append(':').append(variantId).toString();
     this.variantId = variantId;
-    this.pushObjectId = pushObjectId;
+    this.pushJobId = pushJobId;
     this.errorReason = errorReason;
   }
 
@@ -35,12 +37,12 @@ public class VariantErrorStatus {
     this.pushMessageVariantId = pushMessageVariantId;
   }
 
-  public String getPushObjectId() {
-    return pushObjectId;
+  public String getPushJobId() {
+    return pushJobId;
   }
 
-  public void setPushObjectId(String pushObjectId) {
-    this.pushObjectId = pushObjectId;
+  public void setPushJobId(String pushJobId) {
+    this.pushJobId = pushJobId;
   }
 
   public String getVariantId() {
@@ -49,5 +51,13 @@ public class VariantErrorStatus {
 
   public void setVariantId(String variantId) {
     this.variantId = variantId;
+  }
+
+  public void setPushMessageInformation(FlatPushMessageInformation pushMessageInformation) {
+    this.pushMessageInformation = pushMessageInformation;
+  }
+
+  public FlatPushMessageInformation getPushMessageInformation() {
+    return pushMessageInformation;
   }
 }

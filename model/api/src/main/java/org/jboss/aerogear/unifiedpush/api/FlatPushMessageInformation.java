@@ -2,9 +2,7 @@ package org.jboss.aerogear.unifiedpush.api;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class FlatPushMessageInformation extends BaseModel {
 
@@ -27,8 +25,6 @@ public class FlatPushMessageInformation extends BaseModel {
   private List<VariantErrorStatus> errors;
 
 
-  // this is than "removed"
-  private Set<VariantMetricInformation> variantInformations = new HashSet<>();
   // end of not relevant section
 
   public void setRawJsonMessage(final String rawJsonMessage) {
@@ -87,16 +83,15 @@ public class FlatPushMessageInformation extends BaseModel {
     return appOpenCounter;
   }
 
-  public void addVariantInformations(final VariantMetricInformation vmi) {
-    this.variantInformations.add(vmi);
-  }
-
-  public Set<VariantMetricInformation> getVariantInformations() {
-    // TODO: this should return a copy or an immutable object to avoid threading issues
-    return variantInformations;
-  }
-
   public String getIpAddress() {
     return ipAddress;
+  }
+
+  public void setErrors(List<VariantErrorStatus> errors) {
+    this.errors = errors;
+  }
+
+  public List<VariantErrorStatus> getErrors() {
+    return errors;
   }
 }

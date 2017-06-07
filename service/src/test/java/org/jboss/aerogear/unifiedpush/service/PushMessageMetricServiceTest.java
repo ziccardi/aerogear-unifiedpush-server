@@ -49,7 +49,7 @@ public class PushMessageMetricServiceTest extends AbstractBaseServiceTest{
 
         VariantMetricInformation variantMetricInformation = new VariantMetricInformation();
         variantMetricInformation.setVariantID("321");
-        pushMessageInformation.addVariantInformations(variantMetricInformation);
+        //pushMessageInformation.addVariantInformations(variantMetricInformation);
         pushMessageMetricsService.updatePushMessageInformation(pushMessageInformation);
     }
 

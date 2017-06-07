@@ -31,11 +31,11 @@
         <property name="lastOpenDate" type="java.util.Date">
             <column name="last_open_date" />
         </property>
-        <set name="variantInformations" table="variant_metric_info" inverse="true" lazy="false" cascade="all">
+        <set name="errors" table="variant_error_status" inverse="true" lazy="false" cascade="all">
             <key>
                 <column name="push_message_info_id" not-null="true" />
             </key>
-            <one-to-many class="org.jboss.aerogear.unifiedpush.api.VariantMetricInformation" />
+            <one-to-many class="org.jboss.aerogear.unifiedpush.api.VariantErrorStatus" />
         </set>
     </class>
 </hibernate-mapping>

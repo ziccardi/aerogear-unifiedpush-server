@@ -22,6 +22,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation;
+import org.jboss.aerogear.unifiedpush.api.Variant;
+import org.jboss.aerogear.unifiedpush.api.VariantErrorStatus;
 import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.dao.PageResult;
 import org.jboss.aerogear.unifiedpush.dao.PushMessageInformationDao;
@@ -74,6 +76,11 @@ public class PushMessageMetricsService {
 
     public void updatePushMessageInformation(FlatPushMessageInformation pushMessageInformation) {
         pushMessageInformationDao.update(pushMessageInformation);
+    }
+
+    public void appendError(final FlatPushMessageInformation pushMessageInformation, final Variant variant, final String errorMessage) {
+        VariantErrorStatus ves = new VariantErrorStatus(pushMessageInformation.getId() , variant.getVariantID(), errorMessage);
+        pushMessageInformation.getErrors().add(ves);
     }
 
     /**
