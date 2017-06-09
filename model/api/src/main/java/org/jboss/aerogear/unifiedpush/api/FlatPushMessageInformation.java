@@ -2,7 +2,7 @@ package org.jboss.aerogear.unifiedpush.api;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 public class FlatPushMessageInformation extends BaseModel {
 
@@ -22,7 +22,7 @@ public class FlatPushMessageInformation extends BaseModel {
 
   // this is new:
   // once an error on a variant occurs, a error reason will be added to the list
-  private List<VariantErrorStatus> errors;
+  private Set<VariantErrorStatus> errors;
 
 
   // end of not relevant section
@@ -87,11 +87,11 @@ public class FlatPushMessageInformation extends BaseModel {
     return ipAddress;
   }
 
-  public void setErrors(List<VariantErrorStatus> errors) {
+  public void setErrors(Set<VariantErrorStatus> errors) {
     this.errors = errors;
   }
 
-  public List<VariantErrorStatus> getErrors() {
+  public Set<VariantErrorStatus> getErrors() {
     return errors;
   }
 
