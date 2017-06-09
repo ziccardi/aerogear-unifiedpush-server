@@ -9,8 +9,8 @@
         <property name="errorReason" type="java.lang.Long">
             <column name="error_reason" />
         </property>
-        <property name="pushJobId" type="java.lang.Boolean">
-            <column name="push_job_id" />
+        <property name="pushJobId" type="java.lang.Boolean" insert="false" update="false">
+            <column name="push_job_id"/>
         </property>
         <property name="variantId" type="java.lang.Long">
             <column name="variant_id" />

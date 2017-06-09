@@ -94,4 +94,12 @@ public class FlatPushMessageInformation extends BaseModel {
   public List<VariantErrorStatus> getErrors() {
     return errors;
   }
+
+  public void setAppOpenCounter(Long appOpenCounter) {
+    this.appOpenCounter = appOpenCounter;
+  }
+
+  public void setSubmitDate(Date submitDate) {
+    this.submitDate = submitDate;
+  }
 }

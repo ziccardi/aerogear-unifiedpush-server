@@ -26,7 +26,7 @@
                impl-version="2.0">
     <enterprise-beans>
 
-        <!-- Push Message Queue MDBs -->q
+        <!-- Push Message Queue MDBs -->
         <message-driven>
             <ejb-name>AdmPushMessageConsumer</ejb-name>
             <ejb-class>org.jboss.aerogear.unifiedpush.message.jms.MessageHolderWithVariantsConsumer</ejb-class>
