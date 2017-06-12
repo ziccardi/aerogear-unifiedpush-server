@@ -10,6 +10,7 @@ public class VariantErrorStatus {
   private String variantId;
 
   private FlatPushMessageInformation pushMessageInformation;
+  private Variant variant;
 
   public VariantErrorStatus() {
   }
@@ -74,5 +75,13 @@ public class VariantErrorStatus {
   @Override
   public int hashCode() {
     return pushMessageVariantId != null ? pushMessageVariantId.hashCode() : 0;
+  }
+
+  public void setVariant(Variant variant) {
+    this.variant = variant;
+  }
+
+  public Variant getVariant() {
+    return variant;
   }
 }

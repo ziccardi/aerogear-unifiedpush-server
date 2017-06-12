@@ -18,5 +18,8 @@
         <many-to-one name="pushMessageInformation" class="org.jboss.aerogear.unifiedpush.api.FlatPushMessageInformation" fetch="join">
             <column name="push_job_id" />
         </many-to-one>
+        <many-to-one name="variant" class="org.jboss.aerogear.unifiedpush.api.Variant" fetch="join">
+            <column name="variantId" />
+        </many-to-one>
     </class>
 </hibernate-mapping>
