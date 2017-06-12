@@ -139,7 +139,7 @@ public class JPAPushMessageInformationDao extends JPABaseDao<FlatPushMessageInfo
                 .setParameter("oldest", oldest)
                 .executeUpdate();
 
-        int affectedRows = entityManager.createQuery("delete FROM PushMessageInformation pmi WHERE pmi.submitDate < :oldest")
+        int affectedRows = entityManager.createQuery("delete FROM FlatPushMessageInformation pmi WHERE pmi.submitDate < :oldest")
                 .setParameter("oldest", oldest)
                 .executeUpdate();
 

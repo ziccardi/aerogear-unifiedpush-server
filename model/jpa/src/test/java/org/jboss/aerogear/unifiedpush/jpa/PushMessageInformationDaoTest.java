@@ -182,11 +182,11 @@ public class PushMessageInformationDaoTest {
         assertThat(pushMessageInformationDao.getNumberOfPushMessagesForPushApplication("231231232")).isEqualTo(1);
     }
 
-    @Test
-    public void countMessagesPerVariant() {
-        assertThat(pushMessageInformationDao.getNumberOfPushMessagesForVariant("231543432432")).isEqualTo(2);
-        assertThat(pushMessageInformationDao.getNumberOfPushMessagesForVariant("231543432434")).isEqualTo(1);
-    }
+//    @Test
+//    public void countMessagesPerVariant() {
+//        assertThat(pushMessageInformationDao.getNumberOfPushMessagesForVariant("231543432432")).isEqualTo(2);
+//        assertThat(pushMessageInformationDao.getNumberOfPushMessagesForVariant("231543432434")).isEqualTo(1);
+//    }
 
     @Test
     public void findMostBusyVariants() {
