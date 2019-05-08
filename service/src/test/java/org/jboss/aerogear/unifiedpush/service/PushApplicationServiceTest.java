@@ -16,6 +16,7 @@
  */
 package org.jboss.aerogear.unifiedpush.service;
 
+import org.assertj.core.api.Assertions;
 import org.jboss.aerogear.unifiedpush.api.PushApplication;
 import org.junit.Test;
 
@@ -138,7 +139,7 @@ public class PushApplicationServiceTest extends AbstractBaseServiceTest {
         assertThat(searchApplicationService.findByPushApplicationIDForDeveloper("123-3421")).isNull();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void shouldThrowErrorWhenCreatingAppWithExistingID() {
         // Given
         final String uuid = UUID.randomUUID().toString();
@@ -155,6 +156,10 @@ public class PushApplicationServiceTest extends AbstractBaseServiceTest {
 
         // When
         pushApplicationService.addPushApplication(pa);
+
+        Assertions.fail("Fail now");
+
+        //System.out.println (">>>>>" + pushApplicationService.findByPushApplicationID(pa.getPushApplicationID()));
         assertThat(pushApplicationService.findByPushApplicationID(pa.getPushApplicationID()))
                 .isNotNull();
 
