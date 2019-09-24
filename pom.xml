@@ -159,7 +159,21 @@
           <skip>false</skip>
         </configuration>
       </plugin>
-
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.0.0-M3</version>
+        <configuration>       
+          <argLine>--add-modules=java.se</argLine>  
+        </configuration>  
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <artifactId>maven-remote-resources-plugin</artifactId>
         <executions>
